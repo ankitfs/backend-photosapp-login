@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class RegistrationController {
 
     @Autowired
     private RegistrationService registrationService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/api/register")
     public ResponseBean registerUserHandler(@RequestBody RegisterUserBean registerUserBean) {
         System.out.println("Handling Registration Request Entered");
-        ResponseBean response = new ResponseBean(); //registrationService.processUserRegistration(registerUserBean);
+        ResponseBean response = new ResponseBean();
+        String responseString = registrationService.processUserRegistration(registerUserBean);
         response.setStatusCode(200);
         if(response.getStatusCode() != 200) {
             response.setMessage("Error : User Registration Failed");
